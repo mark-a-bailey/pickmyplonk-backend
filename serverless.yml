@@ -13,3 +13,27 @@ provider:
   runtime: nodejs6.10
   stage: prod
   region: eu-west-2
+
+# 'iamRoleStatement' defines the permission policy for the Lambda function.
+  # In this case Lambda functions are granted with permissions to access DynamoDB.
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - dynamodb:DescribeTable
+        - dynamodb:Query
+        - dynamodb:Scan
+        - dynamodb:GetItem
+        - dynamodb:PutItem
+        - dynamodb:UpdateItem
+        - dynamodb:DeleteItem
+      Resource: "arn:aws:dynamodb:eu-west-2:*:*"
+
+functions:
+  add_producer:
+    handler: scripts/add_producer.main
+    events:
+      - http:
+          path: producer
+          method: post
+          cors: true
+          authorizer: aws_iam
