@@ -38,9 +38,11 @@ function get_producer_list() {
         'Sixteen Ridges'
     ];
 
-    return producer_names.map(function (name) {
-       let producer_uuid = uuid.v1();
-       return {uuid: producer_uuid, name: name};
-    });
+    return producer_names
+        .sort()
+        .map(function (name) {
+            let producer_uuid = uuid.v1();
+            return {uuid: producer_uuid, name: name};
+        });
 
 }
