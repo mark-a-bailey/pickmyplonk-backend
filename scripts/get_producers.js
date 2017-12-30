@@ -6,8 +6,14 @@ AWS.config.update({ region: "eu-west-2" });
 
 export function main(event, context, callback) {
 
+    const response_headers = {
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true
+    };
+
     const response = {
         statusCode: 200,
+        headers: response_headers,
         body: JSON.stringify(get_producer_list())
     };
 
