@@ -1,0 +1,39 @@
+# Javascript Node CircleCI 2.0 configuration file
+#
+# Check https://circleci.com/docs/2.0/language-javascript/ for more details
+#
+defaults: &defaults
+  working_directory: ~/pmp-backend-wdir
+  docker:
+    - image: node:8.9.1
+
+version: 2
+jobs:
+  install:
+    <<: *defaults
+    steps:
+      - run:
+          name: Checking Versions
+          command: |
+             node --version
+             npm --version
+      - checkout
+      - save_cache:
+          key: src-cache-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - .
+      - restore_cache:
+          key: dependency-cache-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+          name: Install npm
+          command: npm install
+      - save_cache:
+          key: dependency-cache-{{ .Environment.CIRCLE_SHA1 }}
+          paths:
+            - ./node_modules
+
+workflows:
+  version: 2
+  full_build_deploy_to_s3:
+    jobs:
+      - install

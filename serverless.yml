@@ -13,3 +13,13 @@ provider:
   runtime: nodejs6.10
   stage: prod
   region: eu-west-2
+
+functions:
+  get_producers:
+    handler: scripts/get_producers.main
+    events:
+      - http:
+          path: producer
+          method: get
+          cors: true
+          authorizer: aws_iam
