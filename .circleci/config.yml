@@ -36,34 +36,31 @@ jobs:
           paths:
             - ./node_modules
   deploy:
-      <<: *defaults
-      steps:
-        - restore_cache:
-            key: src-cache-{{ .Environment.CIRCLE_SHA1 }}
-        - restore_cache:
-            key: dependency-cache-{{ .Environment.CIRCLE_SHA1 }}
-        - run:
-          name: Install AWS CLI
-          working_directory: /
-          command: |
-            apt-get -y -qq update
-            apt-get -y -qq install awscli
-            aws configure set default.s3.signature_version s3v4
-        - run:
-            name: Install Serverless
-            command: npm install -g serverless
-        - run:
-            name: Deploy via Serverless
-            command: serverless deploy
+    <<: *defaults
+    steps:
+      - restore_cache:
+        key: src-cache-{{ .Environment.CIRCLE_SHA1 }}
+      - restore_cache:
+        key: dependency-cache-{{ .Environment.CIRCLE_SHA1 }}
+      - run:
+        name: Install AWS CLI
+        working_directory: /
+        command: |
+          apt-get -y -qq update
+          apt-get -y -qq install awscli
+          aws configure set default.s3.signature_version s3v4
+      - run:
+        name: Install Serverless
+        command: npm install -g serverless
+      - run:
+        name: Deploy via Serverless
+        command: serverless deploy
 
 workflows:
   version: 2
-  full_build_deploy_to_s3:
+  build_and_deploy_api:
     jobs:
       - install
       - deploy:
         requires:
           - install
-        filters:
-          branches:
-            only: master
