@@ -16,10 +16,26 @@ provider:
 
 functions:
   get_producers:
-    handler: scripts/get_producers.main
+    handler: src/handlers/producer_handler.getProducers
     events:
       - http:
           path: producer
           method: get
           cors: true
           authorizer: aws_iam
+  add_producer:
+    handler: src/handlers/producer_handler.addProducer
+    events:
+      - http:
+          path: producer
+          method: post
+          cors: true
+          authorizer: aws_iam
+  get_producer:
+      handler: src/handlers/producer_handler.getProducer
+      events:
+        - http:
+            path: producer/{id}
+            method: get
+            cors: true
+            authorizer: aws_iam

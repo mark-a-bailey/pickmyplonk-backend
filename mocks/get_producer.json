@@ -1,5 +1,8 @@
 {
-  "body": "{\"name\":\"Made Up Name\"}",
+  "body": {},
+  "pathParameters": {
+    "id": "5f0f2900-eee5-11e7-9429-25d42ac0091c"
+  },
   "requestContext": {
     "identity": {
       "cognitoIdentityId": "USER-SUB-1234"
