@@ -32,10 +32,34 @@ functions:
           cors: true
           authorizer: aws_iam
   get_producer:
-      handler: src/handlers/producer_handler.getProducer
-      events:
-        - http:
-            path: producer/{id}
-            method: get
-            cors: true
-            authorizer: aws_iam
+    handler: src/handlers/producer_handler.getProducer
+    events:
+      - http:
+          path: producer/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+  get_wines:
+    handler: src/handlers/wine_handler.getWines
+    events:
+      - http:
+          path: wine
+          method: get
+          cors: true
+          authorizer: aws_iam
+  get_wine:
+    handler: src/handlers/wine_handler.getWine
+    events:
+      - http:
+          path: wine/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+  add_wine:
+    handler: src/handlers/wine_handler.addWine
+    events:
+      - http:
+          path: wine
+          method: post
+          cors: true
+          authorizer: aws_iam
